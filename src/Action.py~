@@ -1,0 +1,35 @@
+import Constants
+
+__author__ = 'zeeshan'
+
+
+class Action(object):
+
+    """
+        Represent the command string and the type of command.
+        For eg: The type of command is cp i.e copy and action string is
+        the input for that command
+    """
+
+    def __init__(self, type, action_string):
+        self._action_string = action_string
+        self._type = type
+
+    def __eq__(self, other):
+        if self._action_string != other.action_string:
+            return False
+        elif self._type != other.type:
+            return False
+
+        return True
+
+    def get_action_string(self):
+        return self._action_string
+
+    def get_type(self):
+        return self._type
+
+    def get_command_input(self):
+        if self._action_string is None:
+            return None
+        return self._action_string.split(Constants.COMMAND_SPLIT_REGEX)

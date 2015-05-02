@@ -1,0 +1,9 @@
+<actionsets>
+
+    <actionset ip="127.0.0.1" username="root1" password="123" os="Linux" name="nameOne">
+
+
+    <actionset ip="127.0.0.2" username="root2" password="1234" os="Windows" name="nameTwo">
+
+
+</actionsets>

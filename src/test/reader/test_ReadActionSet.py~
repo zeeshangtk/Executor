@@ -1,0 +1,62 @@
+from unittest import TestCase
+
+from src.code.ActionSet import ActionSet
+from src.code.Action import Action
+from src.code.reader.ReadActionSet import ReadActionSetFromXML
+from src.code.util.Validator import Validator
+
+
+__author__ = 'zeeshan'
+
+
+class TestReadActionSetFromXML(TestCase):
+
+    def test_get_actionsets_file_not_present_fail(self):
+        try:
+            obj = ReadActionSetFromXML(Validator())
+            # obj.get_actionsets("ActionSetPass.xml")
+            obj.get_actionsets("/opt/nofile.xml")
+            self.fail("Should have thrown a no file found exception")
+        except Exception as e:
+            self.assertEqual(
+                e.message, "The file /opt/nofile.xml does not exists")
+
+    def test_get_actionsets_pass(self):
+
+        obj = ReadActionSetFromXML(Validator())
+        list_of_actionsets = obj.get_actionsets("/home/zeeshan/Development/python/RemoteCommandExecutor/src/test/reader/ActionSetPass.xml")
+
+        dummy_action_0 = [Action("rcp", '/opt/ /opt/'),
+                          Action("rcmd", "ls"),
+                          Action("rcp", '/opt/jar /opt/jar')]
+
+        dummy_action_1 = [Action("rcp", '/tmp/ /tmp/'),
+                          Action("rcmd", 'date',),
+                          Action("rcp", '/opt/bin /opt/bin')]
+
+        dummy_actionsets_0 = ActionSet(
+            "127.0.0.1", "root1", "123", "Linux", "nameOne", dummy_action_0)
+        dummy_actionsets_1 = ActionSet(
+            "127.0.0.2", "root2", "1234", "Windows", "nameTwo", dummy_action_1)
+
+        self.assertEqual(list_of_actionsets[0], dummy_actionsets_0)
+        self.assertEqual(list_of_actionsets[1], dummy_actionsets_1)
+
+    def test_get_actionsets_invalidfile_fail(self):
+        try:
+            obj = ReadActionSetFromXML(Validator())
+            obj.get_actionsets("InvalidActionSet.xml")
+            self.fail("Invalid file exception should be thrown")
+        except Exception as e:
+            print "the erorr message"
+            print e.message
+
+    def test_get_actionsets_null_entry_fail(self):
+        try:
+            obj = ReadActionSetFromXML(Validator())
+            list_of_actionsets = obj.get_actionsets(
+                "ActionSetWithNullParamter.xml")
+            self.fail("Invalid file exception should be thrown")
+        except Exception as e:
+            print "the erorr message"
+            print e.message

@@ -1,0 +1,9 @@
+<actionsets>
+
+    <actionset ip="127.0.0.1" username="zeeshan" password="namchi123" os="Linux" name="nameOne">
+        <action cmd="rcp">/home/zeeshan/Development/js/*.js /tmp/</action>
+        <action cmd="rcmd">ls</action>
+        <!--<action cmd="cp">/home/zeeshan/Development/test/data.db##.db##/tmp/</action>-->
+    </actionset>
+
+</actionsets>

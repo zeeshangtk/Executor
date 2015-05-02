@@ -1,0 +1,4 @@
+2015-05-02 19:34:43,860 Connected (version 2.0, client OpenSSH_6.7p1)
+2015-05-02 19:34:43,988 Authentication (password) successful!
+2015-05-02 19:34:44,216 [chan 0] Opened sftp connection (server version 3)
+2015-05-02 19:34:44,217 ExecuteLinuxAction-_getSFTPConnection-Successfuly connected to 127.0.0.1

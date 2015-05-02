@@ -1,0 +1,15 @@
+<actionsets>
+
+    <actionset ip="127.0.0.1" username="root1" password="123" os="Linux" name="nameOne">
+        <action cmd="rcp">/opt/ /opt/</action>
+        <action cmd="rcmd">ls</action>
+        <action cmd="rcp">/opt/jar /opt/jar</action>
+    </actionset>
+
+    <actionset ip="127.0.0.2" username="root2" password="1234" os="Windows" name="nameTwo">
+        <action cmd="rcp">/tmp/ /tmp/</action>
+        <action cmd="rcmd">date</action>
+        <action cmd="rcp">/opt/bin /opt/bin</action>
+    </actionset>
+
+</actionsets>

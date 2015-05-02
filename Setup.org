@@ -1,0 +1,14 @@
+
+* INSTALL VIRTUAL ENV IN LINUX FOR PYTHON
+1)Install virtual environment
+	http://docs.python-guide.org/en/latest/dev/virtualenvs/
+	$ pip install virtualenv
+2)To create a virtual environment
+	$ cd my_project_folder
+	$ virtualenv venv
+3)To begin using virtual environment
+	$ source venv/bin/activate
+4)Install package in virtual environment
+	$ pip install requests
+5)Deactive virtual env
+	$ deactivate
