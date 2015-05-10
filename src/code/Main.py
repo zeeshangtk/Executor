@@ -26,6 +26,9 @@ if __name__=="__main__":
         if arg.__contains__(".xml"):
             print "The argument is "+arg
             file_paths.append(arg)
-    obj = Main(file_paths)
-    obj.start_execution()
+    try:
+        obj = Main(file_paths)
+        obj.start_execution()
+    except Exception as e:
+        print e.message
         
