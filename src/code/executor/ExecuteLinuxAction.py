@@ -42,10 +42,15 @@ class ExecuteLinuxAction(object):
             ###Note:This is a bug from the library itself that does
             ##not allow the dest to be folder.I have to manually pass all the file
             ##name.
-            file_name =  os.path.split(src_file)[1]
-            log.info("The file "+file_name+" to be copied  to destination path "+dest_folder+os.sep+file_name)
-            sftp_client.put(src_file,dest_folder+os.sep+file_name)
-            print "the file that has been copied is "+dest_folder+os.sep+file_name
+            try:
+                file_name =  os.path.split(src_file)[1]
+                log.info("The file "+file_name+" to be copied  to destination path "+dest_folder+os.sep+file_name)
+                sftp_client.put(src_file,dest_folder+os.sep+file_name)
+                print "the file that has been copied is "+dest_folder+os.sep+file_name
+            except Exception as e:
+                print e.message
+                log.error(e.message)
+                raise e
 
 
     def _execute_command_remotely_single_session(self, client, list_of_command):
