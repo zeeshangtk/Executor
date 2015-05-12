@@ -43,10 +43,12 @@ class ExecuteLinuxAction(object):
             ##not allow the dest to be folder.I have to manually pass all the file
             ##name.
             try:
+
                 file_name =  os.path.split(src_file)[1]
                 log.info("The file "+file_name+" to be copied  to destination path "+dest_folder+os.sep+file_name)
                 sftp_client.put(src_file,dest_folder+os.sep+file_name)
-                print "the file that has been copied is "+dest_folder+os.sep+file_name
+                print "The file "+file_name+" has  been copied  to destination path "+dest_folder+os.sep+file_name
+
             except Exception as e:
                 print e.message
                 log.error(e.message)
