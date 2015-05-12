@@ -1,4 +1,5 @@
 import glob
+from src.code.common import log
 
 __author__ = 'zeeshan'
 
@@ -22,6 +23,7 @@ class ExecuteAction(object):
 
     def _copy_file_to_remote_server(self,src_path,target_path):
         list_of_files = glob.glob(src_path)
+        log.info("The list of files in src_path "+src_path+" is "+str(list_of_files))
         self.execute_native_action.copy_file_to_remote_server(list_of_files,target_path)
 
     def _copy_file_to_ftp_server(self):

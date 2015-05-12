@@ -6,7 +6,7 @@ __author__ = 'zeeshan'
 import paramiko
 from paramiko.ssh_exception import AuthenticationException
 
-module_name = "ExecuteLinuxAction-"
+module_name = "ExecuteLinuxAction- "
 class ExecuteLinuxAction(object):
 
     SSH_PORT = 22
@@ -43,7 +43,9 @@ class ExecuteLinuxAction(object):
             ##not allow the dest to be folder.I have to manually pass all the file
             ##name.
             file_name =  os.path.split(src_file)[1]
+            log.info("The file "+file_name+" to be copied  to destination path "+dest_folder+os.sep+file_name)
             sftp_client.put(src_file,dest_folder+os.sep+file_name)
+            print "the file that has been copied is "+dest_folder+os.sep+file_name
 
 
     def _execute_command_remotely_single_session(self, client, list_of_command):
@@ -67,7 +69,8 @@ class ExecuteLinuxAction(object):
 
         except Exception as e:
             log.error(sub_module+"ERROR while executing command"+e.message)
-
+            print e.message
+            raise e
         finally:
             stdout.close()
             stdin.close()
@@ -103,6 +106,11 @@ class ExecuteLinuxAction(object):
         return sftp_client
 
     def _get_command_string(self, list_of_command):
+        """
+        Appends a list of command to a string and add exit to it
+        :param list_of_command:
+        :return:
+        """
         command_string = ""
 
         for command in list_of_command:
