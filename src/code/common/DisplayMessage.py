@@ -1,0 +1,4 @@
+
+
+def printMessage(message):
+	pass

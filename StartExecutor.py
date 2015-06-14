@@ -1,5 +1,6 @@
 import shutil
 import sys
+import traceback
 from src.code.Main import Main
 
 __author__ = 'zeeshan'
@@ -16,5 +17,6 @@ if __name__=="__main__":
         obj = Main(file_paths)
         obj.start_execution()
 
-    except Exception as e:
-        print e.message
+    except Exception , err:
+        print err.message
+        # print(traceback.format_exc())
