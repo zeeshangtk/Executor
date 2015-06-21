@@ -1,7 +1,10 @@
 import glob
+import traceback
+
 import os
 from src.code.common import log
 from src.code.util import Constants
+
 __author__ = 'zeeshan'
 
 
@@ -10,9 +13,10 @@ __author__ = 'zeeshan'
 
 class ExecuteAction(object):
 
-    def __init__(self, action_set, execute_native_action):
+    def __init__(self, action_set, execute_native_action,cfg):
         self._action_set = action_set
         self.execute_native_action = execute_native_action
+        self.cfg = cfg
 
     def _execute_command(self, cmd_string):
         object = os.popen(cmd_string,"r")
@@ -48,18 +52,23 @@ class ExecuteAction(object):
         list_of_action = self._action_set.list_of_action
 
         for action in list_of_action:
+            try:
+                if action.get_command() == "cmd":
+                    self._execute_command(action.get_command_input())
 
-            if action.get_command() == "cmd":
-                self._execute_command(action.get_command_input())
+                elif action.get_command() == "rcmd":
+                    self._execute_remote_command(action.get_command_input())
 
-            elif action.get_command() == "rcmd":
-                self._execute_remote_command(action.get_command_input())
+                elif action.get_command() == "cp":
+                    command_input_list = action.get_command_input().split(Constants.COMMAND_SPLIT_REGEX)
+                    self._copy_file(command_input_list[0], command_input_list[1])
 
-            elif action.get_command() == "cp":
-                command_input_list = action.get_command_input().split(Constants.COMMAND_SPLIT_REGEX)
-                self._copy_file(command_input_list[0], command_input_list[1])
+                elif action.get_command() == "rcp":
+                    command_input_list = action.get_command_input().split(Constants.COMMAND_SPLIT_REGEX)
+                    self._copy_file_to_remote_server(
+                        command_input_list[0], command_input_list[1])
+            except Exception,e:
+                print e.message
+                if self.cfg.fail_fast == True:
+                    raise e
 
-            elif action.get_command() == "rcp":
-                command_input_list = action.get_command_input().split(Constants.COMMAND_SPLIT_REGEX)
-                self._copy_file_to_remote_server(
-                    command_input_list[0], command_input_list[1])

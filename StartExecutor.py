@@ -19,4 +19,4 @@ if __name__=="__main__":
 
     except Exception , err:
         print err.message
-        # print(traceback.format_exc())
+        print(traceback.format_exc())

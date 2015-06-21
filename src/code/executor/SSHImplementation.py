@@ -13,10 +13,11 @@ class SSHImplementation(object):
 
     SSH_PORT = 22
 
-    def __init__(self, username, ip_address, password):
+    def __init__(self, username, ip_address, password,cfg):
         self._user_name = username
         self._ip_address = ip_address
         self._password = password
+        self._cfg = cfg
 
     def execute_command_on_remote_machine(self, list_of_command):
         """
@@ -40,6 +41,14 @@ class SSHImplementation(object):
         except IOError, e:
             log.info("Cannot create directory on remote machine")
 
+    def __validate_files_after_replication(self, failed_file_dict, src_and_dest_dict):
+        if self._cfg.validate_files_after_copy == True:
+            for src_file, destination in src_and_dest_dict.iteritems():
+                
+                print "validating file "+str(src_file)+" to check if it was replicated"
+                if (not self.validate_if_the_file_was_replicated(src_file, destination)):
+                    failed_file_dict[src_file] = destination
+
     def copy_file_to_remote_server(self, src_and_dest_dict):
         sftp_client = self._getSFTPConnection()
         failed_file_dict = {}
@@ -58,10 +67,8 @@ class SSHImplementation(object):
                 log.error("Unable to copy file " + src_file + " " + e.message)
                 raise e
 
+        self.__validate_files_after_replication(failed_file_dict, src_and_dest_dict)
 
-        for src_file, destination in src_and_dest_dict.iteritems():
-            if(not self.validate_if_the_file_was_replicated(src_file,destination)):
-                failed_file_dict[src_file]=destination
         return failed_file_dict
 
 
@@ -173,3 +180,4 @@ class SSHImplementation(object):
         command_string += "exit \n"
 
         return command_string
+

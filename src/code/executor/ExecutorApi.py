@@ -1,5 +1,6 @@
 from src.code.executor.ExecuteAction import ExecuteAction
 from src.code.executor.ExecuteLinuxAction import ExecuteLinuxAction
+from src.code.executor.ExecutorConfiguration import ExecutorConfiguration
 from src.code.executor.SSHImplementation import SSHImplementation
 __author__ = 'zeeshan'
 
@@ -17,7 +18,8 @@ class ExecutorApi(object):
         actionsets_list = self.read_action_set.get_actionsets(file_path)
         for action_set in actionsets_list:
             if(action_set.remote_os=="Linux"):
-                obj = ExecuteAction(action_set,ExecuteLinuxAction(SSHImplementation(action_set.user_name,action_set.ip,action_set.password)))
+                ssh = SSHImplementation(action_set.user_name,action_set.ip,action_set.password,ExecutorConfiguration())
+                obj = ExecuteAction(action_set,ExecuteLinuxAction(ssh),ExecutorConfiguration())
                 obj.execute_action_list()
 
 
